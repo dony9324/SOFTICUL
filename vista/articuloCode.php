@@ -3,12 +3,9 @@
 include '../controlador/InvetarioControlador.php';
 /*Función que sirve para validar y limpiar  un campo*/
 include '../helps/helps.php';
-
 session_start();
-
 header('Content-type: application/json');
 $resultado = array();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["txtNombre"]) && isset($_POST["txtDescricion"]) && isset($_POST["txtNota"])) {
 

@@ -105,4 +105,27 @@ class InvetarioDao extends Conexion
     }
     return false;
   }
+  public static function modificar($usuario)
+  {
+  //  $query = "INSERT INTO invetario (nombre, descricion, nota, foto, id_item, asociacion) VALUES (:nombre, :descricion, :nota, :foto, :id_item, :asociacion)";
+$query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion, `nota` = :nota WHERE `invetario`.`id` = :id";
+    self::getConexion();
+
+    $resultado = self::$cnx->prepare($query);
+    $tmpid =   $usuario->getId();
+    $tmpnombre =   $usuario->getNombre();
+    $tmpdescricion =   $usuario->getDescricion();
+    $tmpnota =   $usuario->getNota();
+    $tmpfoto =   $usuario->getFoto();
+    $tmpid_item =   $usuario->getId_item();
+    $tmpasociacion =   $usuario->getAsociacion();
+    $resultado->bindParam(":id", $tmpid );
+    $resultado->bindParam(":nombre", $tmpnombre );
+    $resultado->bindParam(":descricion", $tmpdescricion);
+    $resultado->bindParam(":nota", $tmpnota);
+    if ($resultado->execute()) {
+      return true;
+    }
+    return false;
+  }
 }

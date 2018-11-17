@@ -1,24 +1,24 @@
 <?php
 /*este archivo coneta los archivos*/
-include '../controlador/InvetarioControlador.php';
+include '../controlador/ItemControlador.php';
 /*Función que sirve para validar y limpiar  un campo*/
 include '../helps/helps.php';
+
 session_start();
+
 header('Content-type: application/json');
 $resultado = array();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["txtNombre"]) && isset($_POST["txtDescricion"]) && isset($_POST["txtNota"])) {
-    $txtId  = validar_campo ($_POST["txtId"]);
-    $txtNombre  = validar_campo ($_POST["txtNombre"]);
-    $txtDescricion = validar_campo($_POST["txtDescricion"]);
-    $txtNota = validar_campo($_POST["txtNota"]);
-    $txtId_item = validar_campo($_POST["txtId_item"]);
-		$txtAsociacion = validar_campo($_POST["txtAsociacion"]);
-    $foto = "";
-    $resultado = array("estado" => "true");
 
-        if (InvetarioControlador::modificar($txtId, $txtNombre, $txtDescricion, $txtNota)) {
-           // $usuario             = InvetarioControlador::getUsuario($txtUsuario, $txtPassword);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["txtId"])) {
+
+
+		// $txtUsuario = strtolower ($txtUsuario);
+		$id = validar_campo ($_POST["txtId"]);
+        $resultado = array("estado" => "true");
+
+        if (ItemControlador::activar($id)) {
+           // $usuario             = ItemControlador::getUsuario($txtUsuario, $txtPassword);
           /*  $_SESSION["usuario"] = array(
                 "id"         => $usuario->getId(),
                 "nombre"     => $usuario->getNombre(),
@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "apellido"   => $usuario->getapellido(),
                 "privilegio" => $usuario->getPrivilegio(),
             );*/
+            setcookie("activaritemtrue","true");
             return print(json_encode($resultado));
         }
 

@@ -17,6 +17,14 @@ if (isset($_SESSION["usuario"])) {
     <br>
     <div class="jumbotron">
       <div class="container text-center">
+        <?php if(isset($_COOKIE['renombraritemtrue'])){?>
+        <div class="alert alert-success text-center">
+        <p><i class='glyphicon glyphicon-ok'></i> Se ha renombrado ítem exitosamente.!!</p>
+        <p></p>
+        </div>
+      <?php setcookie("renombraritemtrue","",time()-18600);
+      }?>
+
         <h1><strong>Item</strong>
           <?php
           $id= $_GET['id'];
@@ -39,7 +47,6 @@ if (isset($_SESSION["usuario"])) {
 
               if (!$conta){
                 echo'
-
                 <form id="loginForm" action="desactivarItemCode.php" method="POST" role="form">
                 <input type="hidden" name="txtId" class="form-control" id="id" value="'.$id.'">
                 <button  type="submit"  class="btn btn-danger">Desactivar</button>
@@ -57,8 +64,6 @@ if (isset($_SESSION["usuario"])) {
     <div class="container">
       <div class="starter-template">
         <div class="jumbotron">
-
-
           <table class="table table-striped">
             <thead class="thead-inverse">
               <tr>
@@ -79,7 +84,7 @@ if (isset($_SESSION["usuario"])) {
                   <td><?php echo $mostrar['nombre']; ?></td>
                   <td><?php echo $mostrar['descricion']; ?></td>
                   <td><?php echo $mostrar['fecha_registro']; ?></td>
-                  <td><a href="modificarArticulo.php?id=<?php echo $mostrar['id']; ?>"> <button type="button" class="btn btn-success">Modificar</button> </a></td>
+                  <td><a href="modificarArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Modificar</button> </a></td>
                 </tr>
               <?php }  ?>
             </tbody>
@@ -88,12 +93,57 @@ if (isset($_SESSION["usuario"])) {
             echo "
             <h1>
             NO Hay articulos en este item.
-
             </h1>";
-
           } ?>
-
         </div>
       </div>
     </div><!-- /.container -->
-    <?php include 'partials/footer.php';?>
+  <?php include 'partials/footer.php';?>
+  <script>
+  $(document).ready(function() {
+   /*cactura el evento del formulario */
+      $("#loginForm").bind("submit", function() {
+   +
+          $.ajax({
+  			/*cacturamos el metodo*/
+              type: $(this).attr("method"),
+  			/**/
+              url: $(this).attr("action"),
+              data: $(this).serialize(),
+              beforeSend: function() {
+                  $("#loginForm button[type=submit]").html("Desactivando...");
+                  $("#loginForm button[type=submit]").attr("disabled", "disabled");
+              },
+              success: function(response) {
+                  if (response.estado == "true") {
+                      $("body").overhang({
+                          type: "success",
+                          message: "Se desactivo item correctamente",
+                          callback: function() {
+                              window.location.href = "admin.php";
+  							$("#loginForm button[type=submit]").html("Desactivar");
+                          }
+                      });
+                  } else {
+                      $("body").overhang({
+                          type: "error",
+                          message: "Algo salio mal!"
+                      });
+                  }
+                  $("#loginForm button[type=submit]").html("Desactivar");
+                  $("#loginForm button[type=submit]").removeAttr("disabled");
+              },
+              error: function() {
+                  $("body").overhang({
+                      type: "error",
+                      message: "Algo salio mal!"
+                  });
+                  $("#loginForm button[type=submit]").html("Desactivar");
+                  $("#loginForm button[type=submit]").removeAttr("disabled");
+              }
+          });
+  /*cansela el envio del formulario*/
+          return false;
+      });
+  });
+  </script>

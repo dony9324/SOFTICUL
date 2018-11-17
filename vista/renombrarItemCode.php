@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "apellido"   => $usuario->getapellido(),
                 "privilegio" => $usuario->getPrivilegio(),
             );*/
+            setcookie("renombraritemtrue","true");
             return print(json_encode($resultado));
         }
 

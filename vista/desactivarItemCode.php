@@ -12,7 +12,7 @@ $resultado = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["txtId"])) {
 
-   
+
 		// $txtUsuario = strtolower ($txtUsuario);
 		$id = validar_campo ($_POST["txtId"]);
         $resultado = array("estado" => "true");
@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "apellido"   => $usuario->getapellido(),
                 "privilegio" => $usuario->getPrivilegio(),
             );*/
+            setcookie("desactivaritemtrue","true");
             return print(json_encode($resultado));
         }
 

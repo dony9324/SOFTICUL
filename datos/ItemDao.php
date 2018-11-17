@@ -157,4 +157,23 @@ class ItemDao extends Conexion
 
     return false;
   }
+
+  public static function activar($is)
+  {
+    // $query = "INSERT INTO item (nombre) VALUES (:nombre)";
+
+
+    $query = " UPDATE item SET estado = 1 WHERE `id` = '".$is."'";
+
+    self::getConexion();
+
+    $resultado = self::$cnx->prepare($query);
+
+
+    if ($resultado->execute()) {
+      return true;
+    }
+
+    return false;
+  }
 }
