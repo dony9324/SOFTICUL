@@ -45,7 +45,13 @@ class InvetarioControlador
     $obj_usuario->setNota($Nota);
     return InvetarioDao::modificar($obj_usuario);
   }
-
+  public function mover($Id, $Id_item)
+  {
+    $obj_usuario = new Invetario();
+    $obj_usuario->setId($Id);
+    $obj_usuario->setid_item($Id_item);
+    return InvetarioDao::mover($obj_usuario);
+  }
 
 
 }

@@ -46,9 +46,21 @@ if (isset($_SESSION["usuario"])) {
               $conta=true;
              }
              if ($conta){
-               echo'<a href="vistasItemDesatibados.php" class="btn btn-success btn-lg">ítem desatibados</a>
+               echo'<a href="vistasItemDesatibados.php" class="btn btn-info btn-lg">ítem desatibados</a>
                <br> <br>';
              }?>
+
+             <?php
+             $sql="SELECT * from invetario WHERE estado < 2";
+             $result=mysqli_query($conexion,$sql);
+             $conta = false;
+             while($mostrar=mysqli_fetch_array($result)){
+                 $conta=true;
+                }
+                if ($conta){
+                  echo'<a href="vistasItemP.php" class="btn btn-info btn-lg">Prestar articulo</a>
+                  <br> <br>';
+                }?>
 				</p>
 			</div>
 		</div>

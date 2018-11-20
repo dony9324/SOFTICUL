@@ -18,12 +18,20 @@ if (isset($_SESSION["usuario"])) {
     <div class="jumbotron">
       <div class="container text-center">
         <?php if(isset($_COOKIE['renombraritemtrue'])){?>
-        <div class="alert alert-success text-center">
-        <p><i class='glyphicon glyphicon-ok'></i> Se ha renombrado ítem exitosamente.!!</p>
-        <p></p>
-        </div>
-      <?php setcookie("renombraritemtrue","",time()-18600);
-      }?>
+          <div class="alert alert-success text-center">
+            <p><i class='glyphicon glyphicon-ok'></i> Se ha renombrado ítem exitosamente.!!</p>
+            <p></p>
+          </div>
+          <?php setcookie("renombraritemtrue","",time()-18600);
+        }?>
+
+        <?php if(isset($_COOKIE['moverArticulotrue'])){?>
+          <div class="alert alert-success text-center">
+            <p><i class='glyphicon glyphicon-ok'></i> Se ha movido articulo exitosamente.!!</p>
+            <p>lo puedes localizar en el Item elegido</p>
+          </div>
+          <?php setcookie("moverArticulotrue","",time()-18600);
+        }?>
 
         <h1><strong>Item</strong>
           <?php
@@ -84,7 +92,10 @@ if (isset($_SESSION["usuario"])) {
                   <td><?php echo $mostrar['nombre']; ?></td>
                   <td><?php echo $mostrar['descricion']; ?></td>
                   <td><?php echo $mostrar['fecha_registro']; ?></td>
-                  <td><a href="modificarArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Modificar</button> </a></td>
+                  <td>
+                    <a href="modificarArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Modificar</button> </a>
+                    <a href="moverArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Mover</button> </a>
+                  </td>
                 </tr>
               <?php }  ?>
             </tbody>
@@ -98,52 +109,52 @@ if (isset($_SESSION["usuario"])) {
         </div>
       </div>
     </div><!-- /.container -->
-  <?php include 'partials/footer.php';?>
-  <script>
-  $(document).ready(function() {
-   /*cactura el evento del formulario */
+    <?php include 'partials/footer.php';?>
+    <script>
+    $(document).ready(function() {
+      /*cactura el evento del formulario */
       $("#loginForm").bind("submit", function() {
-   +
-          $.ajax({
-  			/*cacturamos el metodo*/
-              type: $(this).attr("method"),
-  			/**/
-              url: $(this).attr("action"),
-              data: $(this).serialize(),
-              beforeSend: function() {
-                  $("#loginForm button[type=submit]").html("Desactivando...");
-                  $("#loginForm button[type=submit]").attr("disabled", "disabled");
-              },
-              success: function(response) {
-                  if (response.estado == "true") {
-                      $("body").overhang({
-                          type: "success",
-                          message: "Se desactivo item correctamente",
-                          callback: function() {
-                              window.location.href = "admin.php";
-  							$("#loginForm button[type=submit]").html("Desactivar");
-                          }
-                      });
-                  } else {
-                      $("body").overhang({
-                          type: "error",
-                          message: "Algo salio mal!"
-                      });
-                  }
+        +
+        $.ajax({
+          /*cacturamos el metodo*/
+          type: $(this).attr("method"),
+          /**/
+          url: $(this).attr("action"),
+          data: $(this).serialize(),
+          beforeSend: function() {
+            $("#loginForm button[type=submit]").html("Desactivando...");
+            $("#loginForm button[type=submit]").attr("disabled", "disabled");
+          },
+          success: function(response) {
+            if (response.estado == "true") {
+              $("body").overhang({
+                type: "success",
+                message: "Se desactivo item correctamente",
+                callback: function() {
+                  window.location.href = "admin.php";
                   $("#loginForm button[type=submit]").html("Desactivar");
-                  $("#loginForm button[type=submit]").removeAttr("disabled");
-              },
-              error: function() {
-                  $("body").overhang({
-                      type: "error",
-                      message: "Algo salio mal!"
-                  });
-                  $("#loginForm button[type=submit]").html("Desactivar");
-                  $("#loginForm button[type=submit]").removeAttr("disabled");
-              }
-          });
-  /*cansela el envio del formulario*/
-          return false;
+                }
+              });
+            } else {
+              $("body").overhang({
+                type: "error",
+                message: "Algo salio mal!"
+              });
+            }
+            $("#loginForm button[type=submit]").html("Desactivar");
+            $("#loginForm button[type=submit]").removeAttr("disabled");
+          },
+          error: function() {
+            $("body").overhang({
+              type: "error",
+              message: "Algo salio mal!"
+            });
+            $("#loginForm button[type=submit]").html("Desactivar");
+            $("#loginForm button[type=submit]").removeAttr("disabled");
+          }
+        });
+        /*cansela el envio del formulario*/
+        return false;
       });
-  });
-  </script>
+    });
+    </script>

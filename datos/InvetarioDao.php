@@ -128,4 +128,24 @@ $query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion,
     }
     return false;
   }
+
+
+  public static function mover($usuario)
+  {
+  //  $query = "INSERT INTO invetario (nombre, descricion, nota, foto, id_item, asociacion) VALUES (:nombre, :descricion, :nota, :foto, :id_item, :asociacion)";
+$query = "UPDATE `invetario` SET `id_item` = :id_item WHERE `invetario`.`id` = :id";
+      //    UPDATE `invetario` SET `id_item` = '2'       WHERE `invetario`.`id` = 1;
+    self::getConexion();
+    $resultado = self::$cnx->prepare($query);
+    $tmpid =   $usuario->getId();
+    $tmpid_item =   $usuario->getid_item();
+//    $tmpasociacion =   $usuario->getAsociacion();
+
+    $resultado->bindParam(":id_item", $tmpid_item );
+    $resultado->bindParam(":id", $tmpid );
+    if ($resultado->execute()) {
+      return true;
+    }
+    return false;
+  }
 }
