@@ -7,6 +7,10 @@ if (isset($_SESSION["usuario"])) {
 } else {
   header("location:login.php");
 }
+
+if(isset($_SESSION["Prestar"])){
+	unset($_SESSION["Prestar"]);
+}
 ?>
 <?php include 'partials/menu.php'; ?>
 <div class="container">

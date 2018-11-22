@@ -1,11 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
+﻿-- phpMyAdmin SQL Dump
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2018 a las 21:35:34
--- Versión del servidor: 10.1.35-MariaDB
--- Versión de PHP: 7.2.9
+-- Tiempo de generación: 22-11-2018 a las 19:06:19
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `softicul`
 --
+CREATE DATABASE IF NOT EXISTS `softicul` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `softicul`;
 
 -- --------------------------------------------------------
 
@@ -34,25 +36,11 @@ CREATE TABLE `invetario` (
   `descricion` varchar(255) NOT NULL,
   `nota` varchar(255) NOT NULL,
   `foto` varchar(255) NOT NULL,
+  `estado` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
   `asociacion` int(11) NOT NULL,
   `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `invetario`
---
-
-INSERT INTO `invetario` (`id`, `nombre`, `descricion`, `nota`, `foto`, `id_item`, `asociacion`, `fecha_registro`) VALUES
-(1, 'a', 'a', 'a', '', 1, 0, '0000-00-00 00:00:00'),
-(2, 'a', 'a', 'a', '', 1, 0, '0000-00-00 00:00:00'),
-(3, 'a', 'a', 'a', '', 3, 0, '0000-00-00 00:00:00'),
-(4, 'fecha', 'a', 'a', '', 1, 1, '2018-11-08 11:02:54'),
-(5, 'a', 'a', 'a', '', 0, 1, '2018-11-08 11:03:21'),
-(6, 'a', '1', '1', '', 1, 1, '2018-11-08 11:03:51'),
-(7, 'a', 'a', 'a', '', 1, 1, '2018-11-08 11:04:13'),
-(8, 'ssss', 'sss', 'sss', '', 3, 1, '2018-11-08 11:04:47'),
-(9, 'mesa', 'laga', 'el lobo  esta', '', 3, 1, '2018-11-12 14:10:47');
 
 -- --------------------------------------------------------
 
@@ -65,18 +53,64 @@ CREATE TABLE `item` (
   `nombre` varchar(255) NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `asociacion` int(11) NOT NULL,
-  `fecha_registro` datetime NOT NULL
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `personas`
+--
+
+CREATE TABLE `personas` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `identificacion` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `direccion` varchar(60) NOT NULL,
+  `cell` int(20) NOT NULL,
+  `estado` int(3) NOT NULL,
+  `asociacion` int(11) NOT NULL,
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prestamos`
+--
+
+CREATE TABLE `prestamos` (
+  `id` int(11) NOT NULL,
+  `inventario_id` int(11) NOT NULL,
+  `persona_id` int(11) NOT NULL,
+  `comienzo` date NOT NULL,
+  `terminar` date NOT NULL,
+  `devuelto` date DEFAULT NULL,
+  `asociacion` int(11) DEFAULT NULL,
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `status`
+--
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `item`
+-- Volcado de datos para la tabla `status`
 --
 
-INSERT INTO `item` (`id`, `nombre`, `estado`, `asociacion`, `fecha_registro`) VALUES
-(1, '0', 1, 0, '0000-00-00 00:00:00'),
-(2, '2', 0, 0, '0000-00-00 00:00:00'),
-(3, '3', 1, 0, '0000-00-00 00:00:00'),
-(4, '1', 1, 1, '0000-00-00 00:00:00');
+INSERT INTO `status` (`id`, `name`) VALUES
+(1, 'Disponible'),
+(2, 'Ocupado'),
+(3, 'Inactivo');
 
 -- --------------------------------------------------------
 
@@ -100,12 +134,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `apellido`, `password`, `privilegio`, `asociacion`, `fecha_registro`) VALUES
-(1, 'adlay', 'adlay', 'cesar@eytoo.com', '1234', 1, 0, '2016-08-18 03:59:20'),
-(2, 'Alan Mejia', 'ualan', 'cesar@eytoo.com', '1234', 2, 0, '2016-08-18 03:59:20'),
-(5, 'Delectus fugit', 'uadmin', 'dyxisev@yahoo.com', 'Pa$$w0rd!', 2, 0, '2016-10-06 06:30:53'),
-(6, 'alan', 'asdasd', 'alan@web.co', '12345', 2, 0, '2016-10-06 06:33:37'),
-(7, 'Vsadsad', 'asdad', 'qusy@gmail.com', 'Pa$$w0rd!', 2, 0, '2016-10-06 06:34:30'),
-(8, 'Alan Vidales', 'udev', 'avidal@dev.com', '1234', 2, 0, '2016-10-06 06:35:32');
+(1, 'adlay', 'adlay', 'Cantillo', '1234', 1, 0, '2016-08-18 03:59:20');
 
 --
 -- Índices para tablas volcadas
@@ -124,6 +153,24 @@ ALTER TABLE `item`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `personas`
+--
+ALTER TABLE `personas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `prestamos`
+--
+ALTER TABLE `prestamos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -137,13 +184,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `invetario`
 --
 ALTER TABLE `invetario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `personas`
+--
+ALTER TABLE `personas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de la tabla `prestamos`
+--
+ALTER TABLE `prestamos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

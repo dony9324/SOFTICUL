@@ -58,7 +58,9 @@ if (isset($_SESSION["usuario"])) {
                  $conta=true;
                 }
                 if ($conta){
-                  echo'<a href="vistasItemP.php" class="btn btn-info btn-lg">Prestar articulo</a>
+                  echo'<a href="vistasArticulosP.php" class="btn btn-info btn-lg">Prestar articulo</a>
+                  <br> <br>';
+                  echo'<a href="vistasPrestamos.php" class="btn btn-info btn-lg">ver Prestamos</a>
                   <br> <br>';
                 }?>
 				</p>
