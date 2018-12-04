@@ -46,6 +46,19 @@ if (!isset($_SESSION["usuario"])) {
                       ?></label>
                       <input type="text" value="<?php echo $mostrar['nota']; } ?>" name="txtNota" class="form-control" id="usuario" autofocus required placeholder="ingrese nuevo nombre">
                     </div>
+
+                    <div class="form-group">
+                      <?php
+                      $id= $_GET['id'];
+                      $sql="SELECT * from invetario WHERE `id`= $id";
+                      $result=mysqli_query($conexion,$sql);
+                      while($mostrar=mysqli_fetch_array($result)){
+                      ?>
+                      <label for="usuario">Fecha de adquisición</label>
+                      <input type="date" name="fecha_adquisicion" required="" value="<?php echo $mostrar['fecha_adquisicion']; } ?>"class="form-control" placeholder="Palabra clave">
+                    </div>
+
+
                     <input type="hidden" name="txtId_item" class="form-control" id="id_item" value="<?php echo $_GET['id_item']; ?> ">
                     <input type="hidden" name="txtAsociacion" class="form-control" id="asociacion" value="<?php echo $_SESSION["usuario"]["id"]; ?> ">
                     <input type="hidden" name="txtId" class="form-control" id="id" value="<?php echo $id; ?> ">

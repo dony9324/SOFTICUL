@@ -78,7 +78,8 @@ if (isset($_SESSION["usuario"])) {
                 <th>#</th>
                 <th>nombre</th>
                 <th>descricion</th>
-                <th>fecha de registro</th>
+                <th>nota</th>
+                <th>fecha de adquisición</th>
                 <th></th>
               </tr>
             </thead>
@@ -91,7 +92,8 @@ if (isset($_SESSION["usuario"])) {
                   <th scope="row"><?php echo $mostrar['id']; ?> </th>
                   <td><?php echo $mostrar['nombre']; ?></td>
                   <td><?php echo $mostrar['descricion']; ?></td>
-                  <td><?php echo $mostrar['fecha_registro']; ?></td>
+                  <td><?php echo $mostrar['nota']; ?></td>
+                  <td><?php echo $mostrar['fecha_adquisicion']; ?></td>
                   <td>
                     <a href="modificarArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Modificar</button> </a>
                     <a href="moverArticulo.php?id=<?php echo $mostrar['id']; ?>&id_item=<?php echo $id; ?>"> <button type="button" class="btn btn-success">Mover</button> </a>

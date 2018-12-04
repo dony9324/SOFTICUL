@@ -37,10 +37,6 @@ if(isset($_SESSION["Prestar"])){
         </form>
 
         <div id="show_search_results"></div>
-
-
-
-
         <?php
         $sql="SELECT * from invetario WHERE `estado` < 2 ";
         $result=mysqli_query($conexion,$sql);
@@ -74,7 +70,19 @@ if(isset($_SESSION["Prestar"])){
                 <td><?php echo $mostrar['descricion']; ?></td>
                 <td><?php echo $mostrar['fecha_registro']; ?></td>
                 <td>
+                  <?php
+                  $sql="SELECT * from prestamos WHERE `prestamos`.`devuelto`  is NULL and `prestamos`.`inventario_id` = ".$mostrar['id'];
+                  $ya=mysqli_query($conexion,$sql);
+                  $nmos = false;
+                  while($no=mysqli_fetch_array($ya)){
+                    $nmos = true;
+                  }
+                  if ($nmos) {
+                  echo "ya prestado";
+                }else {
+                   ?>
                   <a href="PrestarArticulo.php?id=<?php echo $mostrar['id']; ?>"> <button type="button" class="btn btn-primary">Escojer</button> </a>
+                <?php } ?>
                 </td>
               </tr>
             <?php }  ?>

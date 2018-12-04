@@ -83,7 +83,7 @@ class InvetarioDao extends Conexion
   */
   public static function registrar($usuario)
   {
-    $query = "INSERT INTO invetario (nombre, descricion, nota, foto, id_item, asociacion) VALUES (:nombre, :descricion, :nota, :foto, :id_item, :asociacion)";
+    $query = "INSERT INTO invetario (nombre, descricion, nota, fecha_adquisicion, foto, id_item, asociacion) VALUES (:nombre, :descricion, :nota, :fecha, :foto, :id_item, :asociacion)";
 
     self::getConexion();
 
@@ -91,12 +91,14 @@ class InvetarioDao extends Conexion
     $tmpnombre =   $usuario->getNombre();
     $tmpdescricion =   $usuario->getDescricion();
     $tmpnota =   $usuario->getNota();
+    $tmpfecha =   $usuario->getFecha();
     $tmpfoto =   $usuario->getFoto();
     $tmpid_item =   $usuario->getId_item();
     $tmpasociacion =   $usuario->getAsociacion();
     $resultado->bindParam(":nombre", $tmpnombre );
     $resultado->bindParam(":descricion", $tmpdescricion);
     $resultado->bindParam(":nota", $tmpnota);
+    $resultado->bindParam(":fecha", $tmpfecha);
     $resultado->bindParam(":foto", $tmpfoto);
     $resultado->bindParam(":id_item", $tmpid_item);
     $resultado->bindParam(":asociacion", $tmpasociacion);
@@ -108,7 +110,7 @@ class InvetarioDao extends Conexion
   public static function modificar($usuario)
   {
   //  $query = "INSERT INTO invetario (nombre, descricion, nota, foto, id_item, asociacion) VALUES (:nombre, :descricion, :nota, :foto, :id_item, :asociacion)";
-$query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion, `nota` = :nota WHERE `invetario`.`id` = :id";
+$query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion, `nota` = :nota, `fecha_adquisicion` = :fecha  WHERE `invetario`.`id` = :id";
     self::getConexion();
 
     $resultado = self::$cnx->prepare($query);
@@ -116,6 +118,7 @@ $query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion,
     $tmpnombre =   $usuario->getNombre();
     $tmpdescricion =   $usuario->getDescricion();
     $tmpnota =   $usuario->getNota();
+    $tmpfecha =   $usuario->getFecha();
     $tmpfoto =   $usuario->getFoto();
     $tmpid_item =   $usuario->getId_item();
     $tmpasociacion =   $usuario->getAsociacion();
@@ -123,6 +126,7 @@ $query = "UPDATE `invetario` SET `nombre` = :nombre, `descricion` = :descricion,
     $resultado->bindParam(":nombre", $tmpnombre );
     $resultado->bindParam(":descricion", $tmpdescricion);
     $resultado->bindParam(":nota", $tmpnota);
+    $resultado->bindParam(":fecha", $tmpfecha);
     if ($resultado->execute()) {
       return true;
     }

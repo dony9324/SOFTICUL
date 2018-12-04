@@ -11,7 +11,7 @@ class invetario
 	private $id_item;
    	private $asociacion;
     private $fecha_registro;
-	
+
 /*funciones para adceder a los datos*/
    	public function getId(){
 		return $this->id;
@@ -43,6 +43,13 @@ class invetario
 
 	public function setNota($nota){
 		$this->nota = $nota;
+	}
+  public function getFecha(){
+		return $this->fecha;
+	}
+
+	public function setFecha($fecha){
+		$this->fecha = $fecha;
 	}
 
 	public function getFoto(){

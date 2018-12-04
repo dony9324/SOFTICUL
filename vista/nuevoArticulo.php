@@ -31,11 +31,12 @@ if (!isset($_SESSION["usuario"])) {
                 <label for="usuario">Nota</label>
                 <input type="text" name="txtNota" class="form-control" id="nota" autofocus required placeholder="ingrese alguna informacion adicional">
               </div>
-
-
+              <div class="form-group">
+                <label for="usuario">Fecha de adquisición</label>
+                <input type="date" name="fecha_adquisicion" required="" value="" class="form-control" placeholder="Palabra clave">
+              </div>
               <input type="hidden" name="txtId_item" class="form-control" id="id_item" value="<?php echo $_GET['id']; ?> ">
               <input type="hidden" name="txtAsociacion" class="form-control" id="asociacion" value="<?php echo $_SESSION["usuario"]["id"]; ?> ">
-
               <button type="submit" class="btn btn-success">Guardar</button>
             </form>
           </div>

@@ -24,25 +24,27 @@ class InvetarioControlador
   }
 
 
-  public function registrar($Nombre, $Descricion, $Nota, $foto, $Id_item, $Asociacion)
+  public function registrar($Nombre, $Descricion, $Nota, $Fecha, $foto, $Id_item, $Asociacion)
   {
     $obj_usuario = new Invetario();
     $obj_usuario->setNombre($Nombre);
     $obj_usuario->setDescricion($Descricion);
     $obj_usuario->setNota($Nota);
+    $obj_usuario->setFecha($Fecha);
     $obj_usuario->setfoto($foto);
     $obj_usuario->setId_item($Id_item);
     $obj_usuario->setAsociacion($Asociacion);
     return InvetarioDao::registrar($obj_usuario);
   }
 
-  public function modificar($Id, $Nombre, $Descricion, $Nota)
+  public function modificar($Id, $Nombre, $Descricion, $Nota, $Fecha)
   {
     $obj_usuario = new Invetario();
     $obj_usuario->setId($Id);
     $obj_usuario->setNombre($Nombre);
     $obj_usuario->setDescricion($Descricion);
     $obj_usuario->setNota($Nota);
+    $obj_usuario->setFecha($Fecha);
     return InvetarioDao::modificar($obj_usuario);
   }
   public function mover($Id, $Id_item)
